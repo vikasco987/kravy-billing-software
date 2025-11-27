@@ -1,0 +1,88 @@
+
+> foodsnap.in@0.1.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, using available port 3001 instead.
+   ▲ Next.js 15.3.4
+   - Local:        http://localhost:3001
+   - Network:      http://172.22.157.57:3001
+
+ ✓ Starting...
+ ✓ Ready in 1814ms
+ ○ Compiling / ...
+ ✓ Compiled / in 2.8s (1711 modules)
+ ⨯ [TypeError: localStorage.getItem is not a function] {
+  digest: '2204052173'
+}
+[TypeError: localStorage.getItem is not a function]
+ ⨯ [TypeError: localStorage.getItem is not a function] { page: '/' }
+(node:16501) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 2.4s (2031 modules)
+[TypeError: localStorage.getItem is not a function]
+[TypeError: localStorage.getItem is not a function]
+ ⨯ [TypeError: localStorage.getItem is not a function]
+ ⨯ [TypeError: localStorage.getItem is not a function]
+[TypeError: localStorage.getItem is not a function]
+ ⨯ unhandledRejection: [TypeError: localStorage.getItem is not a function]
+ ⨯ unhandledRejection:  [TypeError: localStorage.getItem is not a function]
+[TypeError: localStorage.getItem is not a function]
+[TypeError: localStorage.getItem is not a function]
+ ⨯ [TypeError: localStorage.getItem is not a function]
+[TypeError: localStorage.getItem is not a function] { page: '/' }
+[TypeError: localStorage.getItem is not a function]
+ ⨯ unhandledRejection: [TypeError: localStorage.getItem is not a function]
+ ⨯ unhandledRejection:  [TypeError: localStorage.getItem is not a function]
+ GET / 500 in 7059ms
+ GET / 500 in 238ms
+ ✓ Compiled /favicon.ico in 241ms (1012 modules)
+ GET /favicon.ico 200 in 391ms
+ ⚠ Found a change in next.config.mjs. Restarting the server to apply the changes...
+   ▲ Next.js 15.3.4
+   - Local:        http://localhost:3001
+   - Network:      http://172.22.157.57:3001
+
+ ✓ Starting...
+ ✓ Ready in 2.5s
+ ○ Compiling / ...
+ ✓ Compiled / in 3.3s (1711 modules)
+ ⨯ [TypeError: localStorage.getItem is not a function] {
+  digest: '2204052173'
+}
+[TypeError: localStorage.getItem is not a function]
+ ⨯ [TypeError: localStorage.getItem is not a function] { page: '/' }
+(node:16603) Warning: `--localstorage-file` was provided without a valid path
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 2.4s (2031 modules)
+[TypeError: localStorage.getItem is not a function]
+[TypeError: localStorage.getItem is not a function]
+ ⨯ [TypeError: localStorage.getItem is not a function]
+ ⨯ [TypeError: localStorage.getItem is not a function]
+[TypeError: localStorage.getItem is not a function]
+ ⨯ unhandledRejection: [TypeError: localStorage.getItem is not a function]
+ ⨯ unhandledRejection:  [TypeError: localStorage.getItem is not a function]
+[TypeError: localStorage.getItem is not a function]
+[TypeError: localStorage.getItem is not a function]
+ ⨯ [TypeError: localStorage.getItem is not a function]
+[TypeError: localStorage.getItem is not a function] { page: '/' }
+[TypeError: localStorage.getItem is not a function]
+ ⨯ unhandledRejection: [TypeError: localStorage.getItem is not a function]
+ ⨯ unhandledRejection:  [TypeError: localStorage.getItem is not a function]
+ GET / 500 in 7406ms
+ GET / 500 in 245ms
+ ✓ Compiled in 744ms (2045 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/Users/macbook/Desktop/kravy-billing-software/.next/cache/webpack/client-development/2.pack.gz_' -> '/Users/macbook/Desktop/kravy-billing-software/.next/cache/webpack/client-development/2.pack.gz'
+ ✓ Compiled in 710ms (1049 modules)
+ ✓ Compiled in 243ms (1049 modules)
+ ✓ Compiled in 195ms (1049 modules)
+ ✓ Compiled in 236ms (1049 modules)
+ ✓ Compiled in 226ms (1049 modules)
+ ✓ Compiled in 150ms (1049 modules)
+ ✓ Compiled in 272ms (1049 modules)
+ ✓ Compiled in 557ms (1145 modules)
+ ✓ Compiled in 964ms (1049 modules)
+ ✓ Compiled in 251ms (1049 modules)
+ ✓ Compiled in 469ms (1049 modules)
+ ✓ Compiled in 400ms (1049 modules)
