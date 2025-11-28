@@ -6,6 +6,7 @@ import { CartProvider } from "@/context/CartContext";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import WhatsAppBubble from "@/components/global/WhatsAppBubble";  // ✅ Added
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -44,15 +45,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-  lang="en"
-  className="scroll-smooth" // no hard-coded dark
-  suppressHydrationWarning
->
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${poppins.variable} font-poppins antialiased`}>
         <ThemeProvider defaultTheme="dark" storageKey="kravy-theme">
           <CartProvider>
             <AppShell>{children}</AppShell>
+
+            {/* ✅ WhatsApp Floating Button */}
+            <WhatsAppBubble />
           </CartProvider>
         </ThemeProvider>
 
