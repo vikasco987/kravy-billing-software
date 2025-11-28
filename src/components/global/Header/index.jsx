@@ -13,22 +13,32 @@ import {
   Trash2,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { useCart } from "@/context/CartContext";
 
-// Desktop nav links
+// About dropdown config
+const aboutNav = { title: "About Us", href: "/about" };
+
+const aboutSubLinks = [
+  { title: "Overview", href: "/about" },
+  { title: "Our Team", href: "/about#team" },
+  { title: "Goals & Vision", href: "/about#goals" },
+  { title: "Careers", href: "/about#careers" },
+];
+
+// Desktop navigation (About is handled separately)
 const navLinks = [
-  { title: "Products", href: "/products" },
+  { title: "Products", href: "/products" }, // ⭐ NEW main Products link
   { title: "Updates", href: "/updates" },
   { title: "FAQs", href: "/faqs" },
   { title: "Contact Us", href: "/contact" },
   { title: "Pricing", href: "/pricing" },
 ];
 
-// Mobile nav links
+// Mobile navigation (About has its own dropdown, so not here)
 const navMobileLinks = [
-  { title: "Products", href: "/products" },
+  { title: "Products", href: "/products" }, // ⭐ NEW in mobile too
   { title: "Updates", href: "/updates" },
   { title: "FAQs", href: "/faqs" },
   { title: "Contact Us", href: "/contact" },
@@ -36,41 +46,23 @@ const navMobileLinks = [
   { title: "Terms & Conditions", href: "/terms-and-conditions" },
 ];
 
-// Quick products list (mobile dropdown)
+// Product list for mobile accordion
 const productsList = [
-  {
-    id: "basic",
-    name: "Kravy Billing Software Basic",
-    priceLabel: "₹499/month",
-    price: 499,
-  },
-  {
-    id: "pos-pro",
-    name: "Kravy POS System Pro",
-    priceLabel: "₹899/month",
-    price: 899,
-  },
-  {
-    id: "inventory-addon",
-    name: "Kravy Inventory Add-on",
-    priceLabel: "₹299/month",
-    price: 299,
-  },
-  {
-    id: "analytics-pro",
-    name: "Kravy Analytics Pro",
-    priceLabel: "₹699/month",
-    price: 699,
-  },
+  { id: "basic", name: "Kravy Billing Software Basic", priceLabel: "₹499/month", price: 499 },
+  { id: "pos-pro", name: "Kravy POS System Pro", priceLabel: "₹899/month", price: 899 },
+  { id: "inventory-addon", name: "Kravy Inventory Add-on", priceLabel: "₹299/month", price: 299 },
+  { id: "analytics-pro", name: "Kravy Analytics Pro", priceLabel: "₹699/month", price: 699 },
 ];
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [showProducts, setShowProducts] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [aboutMobileOpen, setAboutMobileOpen] = useState(false);
 
-  const router = useRouter();
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const {
     cartItems,
@@ -84,132 +76,235 @@ export default function Header() {
   } = useCart();
 
   useEffect(() => {
-    const handleScroll = () => {
+    const closeOnScroll = () => {
       if (isOpen) setIsOpen(false);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", closeOnScroll);
+    return () => window.removeEventListener("scroll", closeOnScroll);
   }, [isOpen]);
 
-  const toggleTheme = () =>
-    setTheme(theme === "dark" ? "light" : "dark");
-
-  const formatCurrency = (val) =>
+  const formatCurrency = (v) =>
     new Intl.NumberFormat("en-IN", {
       style: "currency",
       currency: "INR",
       maximumFractionDigits: 0,
-    }).format(val);
+    }).format(v);
+
+  const isActive = (href) => {
+    if (!pathname) return false;
+    if (href === "/") return pathname === "/";
+    if (href.startsWith("/about")) return pathname.startsWith("/about");
+    return pathname.startsWith(href);
+  };
 
   return (
     <>
-      {/* HEADER BAR */}
-      <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl px-6 rounded-xl backdrop-blur-md bg-white/70 dark:bg-darkBackground/40 border border-gray-200 dark:border-gray-500 shadow-lg transition-all">
+      {/* NAVBAR */}
+      <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl px-6 rounded-xl backdrop-blur-md bg-white/70 dark:bg-darkBackground/40 border border-gray-200 dark:border-gray-500 shadow-lg">
         <div className="flex items-center justify-between py-3">
-          {/* LOGO */}
-          <Link href="/" aria-label="Go to homepage">
+          {/* Logo */}
+          <Link href="/">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -15 }}
               animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
               className="text-xl font-extrabold cursor-pointer text-black dark:text-white"
             >
               Kravy<span className="text-green-500">.in</span>
             </motion.div>
           </Link>
 
-          {/* DESKTOP NAV */}
+          {/* Desktop Navbar */}
           <nav className="hidden md:flex items-center space-x-8">
+            {/* About dropdown (desktop) */}
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+              className="relative group"
+            >
+              <button
+                type="button"
+                className={`flex items-center gap-1 text-sm font-medium transition-colors ${
+                  isActive(aboutNav.href)
+                    ? "text-green-600 dark:text-green-400"
+                    : "text-gray-700 dark:text-gray-200"
+                }`}
+              >
+                {aboutNav.title}
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform ${
+                    isActive(aboutNav.href) ? "rotate-180" : "group-hover:rotate-180"
+                  }`}
+                />
+              </button>
+
+              {/* Dropdown panel */}
+              <div className="absolute left-0 top-full mt-2 w-52 rounded-xl border border-slate-200 bg-white/95 shadow-lg backdrop-blur-md hidden group-hover:block group-focus-within:block dark:border-slate-700 dark:bg-slate-900/95">
+                <div className="py-2">
+                  {aboutSubLinks.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`block px-4 py-2 text-xs text-left hover:bg-slate-100 dark:hover:bg-slate-800 ${
+                        isActive(item.href)
+                          ? "text-green-600 dark:text-green-400"
+                          : "text-slate-700 dark:text-slate-200"
+                      }`}
+                    >
+                      {item.title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Other links (Products, Updates, FAQs, Contact, Pricing) */}
             {navLinks.map((link, i) => (
               <motion.div
                 key={link.href}
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: 0.08 + i * 0.08 }}
               >
                 <Link
                   href={link.href}
-                  className="relative text-sm font-medium text-gray-700 dark:text-gray-200 group"
+                  className={`relative text-sm font-medium group transition-colors ${
+                    isActive(link.href)
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-gray-700 dark:text-gray-200"
+                  }`}
                 >
                   {link.title}
-                  <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-green-500 transition-all group-hover:w-full" />
+                  <span
+                    className={`absolute left-0 -bottom-1 h-0.5 rounded-full bg-green-500 transition-all ${
+                      isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                    }`}
+                  ></span>
                 </Link>
               </motion.div>
             ))}
           </nav>
 
-          {/* RIGHT SIDE BUTTONS */}
+          {/* Right Side */}
           <div className="flex items-center gap-3 md:gap-4">
-            {/* Desktop CTA */}
+            {/* CTA */}
             <motion.a
               href="https://app.foodsnap.in/sign-up?redirect=%2Fpricing"
               target="_blank"
-              rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-md text-sm font-semibold shadow"
+              className="hidden md:inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-md text-sm font-semibold shadow-md"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
             >
               Get Started
             </motion.a>
 
-            {/* Theme toggle */}
-            <button
-              onClick={toggleTheme}
+            {/* Theme Toggle */}
+            <motion.button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
+              whileHover={{ scale: 1.05 }}
             >
-              {theme === "dark" ? (
-                <Sun size={20} className="text-yellow-400" />
-              ) : (
-                <Moon size={20} className="text-gray-800" />
-              )}
-            </button>
+              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+            </motion.button>
 
-            {/* Cart icon */}
+            {/* Cart Button */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative p-2 rounded-lg bg-gray-100 dark:bg-gray-800"
+              className="relative p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
             >
-              <ShoppingCart size={20} className="text-gray-900 dark:text-white" />
+              <ShoppingCart size={20} />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-green-500 text-[11px] text-white flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 w-[18px] h-[18px] bg-green-500 text-white text-[10px] rounded-full flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
             </button>
 
-            {/* Mobile menu button */}
+            {/* Mobile Toggle */}
             <button
-              onClick={() => setIsOpen((prev) => !prev)}
-              className="md:hidden text-gray-900 dark:text-white"
+              onClick={() => setIsOpen((p) => !p)}
+              className="md:hidden text-gray-800 dark:text-white"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
 
-        {/* MOBILE NAV */}
+        {/* MOBILE MENU */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -8 }}
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              className="md:hidden px-4 pb-4 pt-1 space-y-2 border-t border-gray-200 dark:border-gray-800"
+              exit={{ opacity: 0, y: -10 }}
+              className="md:hidden mt-2 px-4 pb-4 space-y-2 border-t border-gray-300 dark:border-gray-700"
             >
+              {/* About dropdown (mobile) */}
+              <button
+                onClick={() => setAboutMobileOpen((p) => !p)}
+                className={`flex items-center justify-between w-full py-2 text-sm border-b border-gray-200 dark:border-gray-800 ${
+                  isActive("/about")
+                    ? "text-green-600 dark:text-green-400"
+                    : "text-gray-800 dark:text-gray-100"
+                }`}
+              >
+                <span>{aboutNav.title}</span>
+                {aboutMobileOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </button>
+
+              <AnimatePresence>
+                {aboutMobileOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="pl-3 space-y-1 overflow-hidden"
+                  >
+                    {aboutSubLinks.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => {
+                          setIsOpen(false);
+                          setAboutMobileOpen(false);
+                        }}
+                        className={`block py-1.5 text-xs border-b border-gray-100 last:border-b-0 dark:border-gray-800 ${
+                          isActive(item.href)
+                            ? "text-green-600 dark:text-green-400"
+                            : "text-gray-700 dark:text-gray-200"
+                        }`}
+                      >
+                        {item.title}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Other mobile links (includes Products now) */}
               {navMobileLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="block py-2 border-b text-sm text-gray-900 dark:text-gray-100"
+                  className={`block py-2 text-sm border-b border-gray-200 dark:border-gray-800 ${
+                    isActive(link.href)
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-gray-800 dark:text-gray-100"
+                  }`}
                 >
                   {link.title}
                 </Link>
               ))}
 
-              {/* PRODUCTS DROPDOWN QUICK ADD */}
+              {/* Products Dropdown (mobile quick add to cart) */}
               <button
-                onClick={() => setShowProducts((prev) => !prev)}
-                className="flex justify-between items-center w-full py-2 border-b text-sm text-gray-900 dark:text-gray-100"
+                onClick={() => setShowProducts((p) => !p)}
+                className="flex justify-between items-center w-full py-2 text-left text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700"
               >
-                <span>Products (Quick Add)</span>
+                <span>Quick Add Products</span>
                 {showProducts ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
               </button>
 
@@ -219,28 +314,21 @@ export default function Header() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="pl-3 space-y-3 overflow-hidden"
+                    className="pl-3 space-y-3 mt-1"
                   >
                     {productsList.map((p) => (
                       <div
                         key={p.id}
-                        className="flex items-center justify-between bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded-md"
+                        className="flex justify-between items-center bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded-md"
                       >
                         <div>
-                          <p className="text-sm font-medium text-gray-900 dark:text-white">
-                            {p.name}
-                          </p>
-                          <p className="text-xs text-gray-600 dark:text-gray-300">
-                            {p.priceLabel}
-                          </p>
+                          <p className="text-sm font-semibold">{p.name}</p>
+                          <p className="text-xs text-gray-500">{p.priceLabel}</p>
                         </div>
+
                         <button
                           onClick={() =>
-                            addToCart({
-                              id: p.id,
-                              name: p.name,
-                              price: p.price,
-                            })
+                            addToCart({ id: p.id, name: p.name, price: p.price })
                           }
                           className="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1.5 rounded-md"
                         >
@@ -251,15 +339,6 @@ export default function Header() {
                   </motion.div>
                 )}
               </AnimatePresence>
-
-              {/* View all products button */}
-              <Link
-                href="/products"
-                onClick={() => setIsOpen(false)}
-                className="block w-full text-center mt-2 text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-md text-sm font-semibold"
-              >
-                View All Products
-              </Link>
             </motion.div>
           )}
         </AnimatePresence>
@@ -269,79 +348,67 @@ export default function Header() {
       <AnimatePresence>
         {isCartOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
-              className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+              className="fixed inset-0 z-40 bg-black/40"
+              onClick={() => setIsCartOpen(false)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setIsCartOpen(false)}
             />
 
-            {/* Drawer */}
             <motion.div
-              className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-sm bg-white dark:bg-[#050816] shadow-2xl border-l border-gray-200 dark:border-gray-700 flex flex-col"
+              className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-sm bg-white dark:bg-darkBackground shadow-xl border-l border-gray-200 dark:border-gray-800 flex flex-col"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
             >
-              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Your Cart
-                </h2>
-                <button
-                  onClick={() => setIsCartOpen(false)}
-                  className="text-gray-600 dark:text-gray-300"
-                >
+              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-800">
+                <h2 className="text-lg font-semibold">Your Cart</h2>
+                <button onClick={() => setIsCartOpen(false)}>
                   <X size={22} />
                 </button>
               </div>
 
               <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
                 {cartItems.length === 0 ? (
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    Your cart is empty.
-                  </p>
+                  <p className="text-sm text-gray-500">Your cart is empty.</p>
                 ) : (
                   cartItems.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-start justify-between gap-3 bg-gray-50 dark:bg-gray-900/40 px-3 py-2 rounded-lg"
+                      className="flex justify-between bg-gray-100 dark:bg-gray-900 p-3 rounded-lg"
                     >
                       <div>
-                        <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                          {item.name}
-                        </p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400">
-                          {formatCurrency(item.price)} × {item.quantity}
+                        <p className="text-sm font-semibold">{item.name}</p>
+                        <p className="text-xs text-gray-500">
+                          {formatCurrency(item.price)}
                         </p>
 
-                        <div className="mt-2 flex items-center gap-2">
+                        <div className="flex items-center mt-2 gap-2">
                           <button
                             onClick={() => decreaseQty(item.id)}
-                            className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-xs"
+                            className="w-6 h-6 bg-gray-300 dark:bg-gray-700 rounded-full text-xs"
                           >
                             -
                           </button>
-                          <span className="text-sm min-w-[18px] text-center text-gray-900 dark:text-white">
-                            {item.quantity}
-                          </span>
+                          <span>{item.quantity}</span>
                           <button
                             onClick={() => increaseQty(item.id)}
-                            className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-xs"
+                            className="w-6 h-6 bg-gray-300 dark:bg-gray-700 rounded-full text-xs"
                           >
                             +
                           </button>
                         </div>
                       </div>
 
-                      <div className="flex flex-col items-end gap-2">
-                        <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                          {formatCurrency(item.price * item.quantity)}
+                      <div className="text-right">
+                        <p className="text-sm font-semibold">
+                          {formatCurrency(item.quantity * item.price)}
                         </p>
+
                         <button
                           onClick={() => removeFromCart(item.id)}
-                          className="text-xs text-red-500 hover:text-red-600 flex items-center gap-1"
+                          className="text-xs text-red-500 flex items-center gap-1 mt-2"
                         >
                           <Trash2 size={14} />
                           Remove
@@ -352,14 +419,10 @@ export default function Header() {
                 )}
               </div>
 
-              <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-3 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
-                    Total ({totalItems} item{totalItems !== 1 ? "s" : ""})
-                  </span>
-                  <span className="text-base font-semibold text-gray-900 dark:text-white">
-                    {formatCurrency(totalAmount)}
-                  </span>
+              <div className="border-t border-gray-300 dark:border-gray-800 p-4">
+                <div className="flex justify-between mb-3">
+                  <span>Total</span>
+                  <span className="font-semibold">{formatCurrency(totalAmount)}</span>
                 </div>
 
                 <button
@@ -369,17 +432,16 @@ export default function Header() {
                     setIsCartOpen(false);
                     router.push("/checkout");
                   }}
-                  className="w-full bg-green-500 hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-2 rounded-md text-sm font-semibold"
+                  className="block w-full text-center bg-green-500 hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white py-2 rounded-md font-semibold"
                 >
                   Checkout
                 </button>
 
                 <button
                   onClick={clearCart}
-                  disabled={cartItems.length === 0}
-                  className="w-full text-xs text-gray-500 hover:text-red-500 flex items-center justify-center gap-1"
+                  className="w-full text-xs text-gray-500 mt-2 flex items-center justify-center gap-1"
                 >
-                  <Trash2 size={14} />
+                  <Trash2 size={12} />
                   Clear Cart
                 </button>
               </div>

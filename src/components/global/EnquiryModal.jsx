@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function EnquiryModal() {
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");        // ✅ NEW
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -41,11 +42,16 @@ export default function EnquiryModal() {
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone }),
+        // ✅ now sending name + phone + source to DB/API
+        body: JSON.stringify({
+          name,
+          phone,
+          source: "popup",
+        }),
       });
 
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.success) {
         throw new Error(data.error || "Failed to submit. Try again.");
       }
 
@@ -92,7 +98,7 @@ export default function EnquiryModal() {
                   Want Kravy for your shop?
                 </h2>
                 <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">
-                  Share your mobile number and we’ll call you with pricing and demo details.
+                  Share your details and we’ll call you with pricing and demo details.
                 </p>
               </div>
               <button
@@ -104,6 +110,21 @@ export default function EnquiryModal() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-3 mt-2">
+              {/* ✅ NEW NAME FIELD */}
+              <div>
+                <label className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                  Name (optional)
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your name"
+                  className="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-transparent px-3 py-2 text-sm text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                />
+              </div>
+
+              {/* PHONE FIELD (same as before) */}
               <div>
                 <label className="text-xs font-medium text-gray-700 dark:text-gray-300">
                   Mobile Number

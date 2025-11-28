@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-// Context with default values
 const ThemeProviderContext = createContext({
   theme: "dark",
   setTheme: () => null,
@@ -14,23 +13,21 @@ export function ThemeProvider({
   storageKey = "vite-ui-theme",
   ...props
 }) {
-  const [theme, setTheme] = useState(defaultTheme);
-
-  // 1) Read from localStorage only on client, after mount
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  // ✅ pick initial theme from localStorage if available (on client)
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") {
+      return defaultTheme;
+    }
 
     try {
       const storedTheme = window.localStorage.getItem(storageKey);
-      if (storedTheme) {
-        setTheme(storedTheme);
-      }
-    } catch (err) {
-      console.error("Error reading theme from localStorage:", err);
+      return storedTheme || defaultTheme;
+    } catch {
+      return defaultTheme;
     }
-  }, [storageKey]);
+  });
 
-  // 2) Apply theme class on <html> whenever theme changes
+  // ✅ apply theme class on <html> whenever theme changes
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -49,7 +46,7 @@ export function ThemeProvider({
     root.classList.add(resolvedTheme);
   }, [theme]);
 
-  // 3) setTheme that also writes to localStorage (client-only)
+  // ✅ setTheme also writes to localStorage
   const value = {
     theme,
     setTheme: (newTheme) => {
