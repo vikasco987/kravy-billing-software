@@ -197,7 +197,7 @@ export default function Header() {
           <div className="flex items-center gap-3 md:gap-4">
             {/* CTA */}
             <motion.a
-              href="https://app.foodsnap.in/sign-up?redirect=%2Fpricing"
+              href="https://kravy-pos-website.vercel.app/"
               target="_blank"
               className="hidden md:inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-md text-sm font-semibold shadow-md"
               initial={{ opacity: 0 }}

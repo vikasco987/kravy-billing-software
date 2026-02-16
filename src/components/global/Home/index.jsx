@@ -68,7 +68,7 @@ export default function Home() {
             </button>
           </a> */}
           <a
-            href="https://app.foodsnap.in/sign-up?redirect=%2Fpricing"
+            href="https://kravy-pos-website.vercel.app/"
             target="_blank"
             className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl 
   bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 
@@ -76,7 +76,7 @@ export default function Home() {
   shadow-md hover:shadow-lg hover:scale-[1.04] active:scale-[0.97]"
           >
             <span className="relative z-10 flex items-center gap-2">
-              Signup Now
+              Try Now
               
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>

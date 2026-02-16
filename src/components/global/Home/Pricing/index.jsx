@@ -5,29 +5,30 @@ import { CheckCircle2, ArrowRight } from "lucide-react";
 
 export const plans = [
   {
-    key: "trial",
-    name: "Trial Plan",
-    price: "₹249",
-    description: "Try Foodsnap with 15 image downloads.",
+    key: "starter",
+    name: "Starter Plan",
+    price: "₹1249",
+    description: "Perfect to start billing digitally for small businesses.",
     features: [
-      "15 image downloads",
-      "Zomato & Swiggy approved photos",
-      "High-quality food images",
+      "Up to 200 invoices / month",
+      "Basic billing dashboard",
+      "GST-ready invoices",
+      "Customer & item management",
     ],
-    button: "Start Trial",
-    link: "/payment/cart?plan=trial",
+    button: "Start Starter Plan",
+    link: "/payment/cart?plan=starter",
     highlight: false,
   },
   {
     key: "basic",
     name: "Basic Plan",
-    price: "₹499",
-    description: "Download 40 high-quality food images.",
+    price: "₹1499",
+    description: "Ideal for growing restaurants and cloud kitchens.",
     features: [
-      "40 image downloads",
-      "Zomato & Swiggy approved photos",
-      "Access to trending photo packs",
-      "High-quality images",
+      "Up to 1000 invoices / month",
+      "Sales & reports dashboard",
+      "Table & order management",
+      "Bulk item upload support",
     ],
     button: "Get Basic Plan",
     link: "/payment/cart?plan=basic",
@@ -36,31 +37,31 @@ export const plans = [
   {
     key: "pro",
     name: "Pro Plan",
-    price: "₹999",
-    description: "Perfect for restaurants managing multiple listings.",
+    price: "₹1999",
+    description: "Best for busy restaurants needing advanced control.",
     features: [
-      "100 image downloads",
-      "Access to entire photo library",
-      "Zomato & Swiggy approved photos",
-      "Priority photo requests",
+      "Unlimited invoices",
+      "AI-powered business insights dashboard",
+      "Staff & role management",
+      "Priority support",
     ],
     button: "Go Pro",
     link: "/payment/cart?plan=pro",
     highlight: true,
   },
   {
-    key: "unlimited",
-    name: "Unlimited Plan",
-    price: "₹1999",
-    description: "Unlimited downloads and full premium access.",
+    key: "enterprise",
+    name: "Enterprise Plan",
+    price: "₹2999",
+    description: "Complete solution for multi-outlet businesses.",
     features: [
-      "Unlimited downloads",
-      "Full access to photo library",
-      "Priority photo request handling",
-      "Access to trending food packs",
+      "Everything in Pro",
+      "Multi-branch management",
+      "Advanced analytics & exports",
+      "Dedicated onboarding support",
     ],
-    button: "Go Unlimited",
-    link: "/payment/cart?plan=unlimited",
+    button: "Go Enterprise",
+    link: "/payment/cart?plan=enterprise",
     highlight: true,
   },
 ];
@@ -128,7 +129,6 @@ export default function PricingSection() {
               </p>
             </div>
 
-            {/* Features */}
             <ul className="mt-auto space-y-3 text-gray-700 dark:text-gray-300 text-left">
               {plan.features.map((feature, i) => (
                 <li key={i} className="flex items-center gap-2">

@@ -15,7 +15,7 @@ export default function Footer() {
     >
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-center">
-          © {new Date().getFullYear()} FoodSnap.in . All rights reserved.
+          © {new Date().getFullYear()} Kravy.in . All rights reserved.
         </p>
         <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2">
           <Link

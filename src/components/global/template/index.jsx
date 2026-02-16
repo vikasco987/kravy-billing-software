@@ -21,7 +21,7 @@ const Template = ({
   contactData,
   GradText = true,
 }) => {
-  const pageUrl = `https://foodsnap.in${ctaLink || ""}`;
+  const pageUrl = `https://kravy.in${ctaLink || ""}`;
 
   return (
     <>

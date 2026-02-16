@@ -139,7 +139,7 @@ export default function AboutPage() {
                 Explore Products
               </a>
               <a
-                href="https://app.foodsnap.in/sign-up?redirect=%2Fpricing"
+                href="https://www.kravy.in/contact"
                 target="_blank"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-300 text-xs md:text-sm text-slate-700 hover:border-emerald-500 hover:text-emerald-700 dark:border-slate-600 dark:text-slate-200 dark:hover:border-emerald-400 dark:hover:text-emerald-300"
               >

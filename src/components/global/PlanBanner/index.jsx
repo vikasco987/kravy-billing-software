@@ -20,8 +20,8 @@ export default function PlanBanner() {
           {/* LEFT SECTION */}
           <div>
             <h3 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white leading-tight">
-              Silver Plan at just{" "}
-              <span className="text-emerald-500">₹399</span>
+              Starter Plan at just{" "}
+              <span className="text-emerald-500">₹1299</span>
               <span className="block md:inline md:ml-2 text-base font-medium text-gray-500 dark:text-gray-300">
                 / per year
               </span>

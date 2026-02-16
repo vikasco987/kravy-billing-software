@@ -6,40 +6,44 @@ import Template from "@/components/global/template";
 
 const updates = [
   {
-    title: "August 4, 2025 – FoodSnap Launched 🎉",
-    description: "India’s first pre-approved food image library is live.",
+    title: "August 4, 2025 – Kravy Launched 🎉",
+    description: "India’s one of the fastest billing software is live.",
     icon: <Zap className="w-6 h-6 text-green-500" />,
     content: (
       <>
-        FoodSnap.in is officially live! Access thousands of high-quality,
-        Swiggy/Zomato-approved food images for just ₹999/month. Perfect for
-        restaurants, cloud kitchens, and menu creators who want fast, reliable,
-        and beautiful visuals.
+        Kravy.in is officially live! Manage your restaurant billing, orders, 
+        and sales with a fast, reliable, 
+        and easy-to-use system — all in one place for just ₹999/month. 
+        Perfect for restaurants, cafés, cloud kitchens, 
+        and food businesses that want smooth billing, 
+        better control, and faster service.
       </>
     ),
   },
   {
-    title: "August 4, 2025 – Image Request Feature",
-    description: "Can’t find a dish? Request it directly from the dashboard.",
+    title: "December 4, 2025 – Bulk item Upload ",
+    description: "owners can upload items using excel file.",
     icon: <MessageCircle className="w-6 h-6 text-green-500" />,
     content: (
       <>
-        Users can now submit requests for missing dishes. Our team will
-        prioritize capturing and uploading the requested food image within 48–72
-        hours. This ensures you always get what you need, fast.
+        Users can now upload multiple menu items at once, 
+        saving time and reducing manual work. Our system processes and organizes your items quickly, 
+        helping you set up or update your menu in minutes. 
+        Perfect for restaurants and cloud kitchens that need fast, 
+        efficient menu management.
       </>
     ),
   },
   {
-    title: "Coming Soon – AI-Based Food Tagging",
-    description: "Smarter search using dish names, cuisines, and ingredients.",
+    title: "Coming Soon – AI-Based Daashbaord",
+    description: "We’re building an AI-powered dashboard for Kravy Billing Software!",
     icon: <ShieldCheck className="w-6 h-6 text-green-500" />,
     content: (
       <>
-        We’re working on an AI-powered tagging system that will allow you to
-        search food images by cuisine (e.g. North Indian, Italian), dish type
-        (e.g. Starter, Dessert), and even core ingredients (e.g. Paneer,
-        Chicken). Stay tuned!
+        Soon you’ll be able to analyze your business using smart AI insights — from sales trends 
+        and top-selling items to customer behavior and revenue patterns. 
+        The dashboard will help you quickly find key data, track performance, 
+        and make better business decisions with minimal effort. Stay tuned!
       </>
     ),
   },
@@ -49,8 +53,8 @@ const updates = [
     icon: <Rows className="w-6 h-6 text-green-500" />,
     content: (
       <>
-        We're improving the mobile interface to make food image browsing,
-        previewing, and downloading smoother on the go. Get your visuals
+        We're improving the mobile interface to make billing,
+        smoother on the go. Get your visuals
         wherever you are, with zero friction.
       </>
     ),
@@ -58,23 +62,23 @@ const updates = [
 ];
 
 const contactData = {
-  title: "Want To Request a Dish Image?",
+  title: "Want To Request a feautre?",
   description:
-    "Let us know if you can't find a particular food item. We'll prioritize it in the next batch.",
+    "Have an idea that can improve your workflow?",
   content: (
     <div>
       <p className="mb-4">
-        These updates reflect our mission to make professional food visuals
-        accessible, affordable, and Swiggy/Zomato-ready. We love building based
-        on your needs — don’t hesitate to get in touch.
+        You can now submit feature requests directly from the dashboard. Tell us what you need, 
+        how it helps your business, and our team will review it for future updates. 
+        We build based on real user needs — so your feedback directly shapes the product.
       </p>
       <p>
         Email:{" "}
         <a
-          href="mailto:report@foodsnap.in"
+          href="mailto:report@kravy.in"
           className="text-blue-600 dark:text-blue-400 hover:underline"
         >
-          report@foodsnap.in
+          report@kravy.in
         </a>
       </p>
     </div>
@@ -87,16 +91,16 @@ const page = () => {
       title="Product Updates"
       heading={
         <div>
-          FoodSnap.in – <br className="hidden sm:block" /> Product Changelog
+          Kravy.in – <br className="hidden sm:block" /> Product Changelog
         </div>
       }
-      description="See the latest updates to our food image library. All changes are aimed at helping you find, request, and use Swiggy/Zomato-approved images more easily."
-      ctaDescription="Check back often for new features and fresh food image collections."
+      description="See the latest updates to our kravy billing software. All changes are aimed at helping you billing more easily."
+      ctaDescription="Check back often for new features and changelogs."
       ctaLink="/report-issue"
       ctaButton={
         <span className="flex items-center gap-2">
           <Zap className="w-4 h-4" />
-          Request an Image
+          Request an Demo
         </span>
       }
       infoData={updates}

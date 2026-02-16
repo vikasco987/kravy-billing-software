@@ -105,20 +105,20 @@ const ZomatoApproved = () => {
         <div className="mx-auto rounded-2xl border border-neutral-200 dark:border-neutral-700 p-6 md:p-10 backdrop-blur-lg shadow-lg dark:shadow-black/20 bg-white/60 dark:bg-[#10101a]/70">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <p className="md:w-2/3 text-neutral-700 dark:text-neutral-300 text-md leading-relaxed">
-              Boost your Zomato & Swiggy listings with high-conversion,
-              pre-approved food photos — professionally curated to elevate your
-              brand and drive more orders.
+              Boost your restaurant operations with Kravy Billing Software — built to streamline billing, 
+              manage orders faster, and improve overall efficiency. 
+              Professionally designed tools help you run your business smoothly
             </p>
 
             <motion.a
-              href="https://app.foodsnap.in/sign-up?redirect=%2Fpricing"
+              href="https://kravy-pos-website.vercel.app/"
               target="_blank"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               className="flex md:w-[150px] justify-center
                w-full text-center items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-3 rounded-lg text-sm font-semibold shadow-lg hover:shadow-2xl transition-all duration-300"
             >
-              Get Images
+              Boost Now
             </motion.a>
           </div>
         </div>
